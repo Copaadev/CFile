@@ -1,0 +1,7 @@
+build/
+build-asan/
+*.o
+*.d
+/cfile
+core
+*.swp
