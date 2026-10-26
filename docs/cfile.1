@@ -1,0 +1,79 @@
+.TH CFILE 1 "2026" "CFile 1.0.0" "User Commands"
+.SH NAME
+cfile \- interactive command line file manager
+.SH SYNOPSIS
+.B cfile
+[\fIOPTIONS\fR] [\fIDIRECTORY\fR]
+.SH DESCRIPTION
+.B cfile
+starts an interactive session for listing, searching, copying, moving,
+renaming and removing files and directories. Destructive operations always
+ask for confirmation, and existing files are never overwritten silently.
+.PP
+Paths accept a leading \fB~\fR and may be quoted with single or double
+quotes. A backslash escapes the next character.
+.SH OPTIONS
+.TP
+.BR \-h ", " \-\-help
+Print usage and exit.
+.TP
+.BR \-V ", " \-\-version
+Print the version and exit.
+.TP
+.B \-\-no\-color
+Disable ANSI colors. Colors are also disabled when standard output is not a
+terminal, when \fBTERM\fR is \fBdumb\fR, or when \fBNO_COLOR\fR is set to a
+non-empty value.
+.TP
+.B \-\-no\-banner
+Do not print the banner and command menu at startup.
+.SH COMMANDS
+.TP
+.B ls [\-a] [dir]
+List a directory with permissions, sizes and modification times. Directories
+are listed first. \fB\-a\fR includes hidden entries.
+.TP
+.B cd [dir|\-]
+Change directory. Without arguments goes to \fB$HOME\fR; \fB\-\fR returns to
+the previous directory.
+.TP
+.B pwd
+Print the current directory.
+.TP
+.B find <name> [dir]
+Recursive, case-insensitive search by file name (substring match). Symbolic
+links are not followed. At most 200 results are shown.
+.TP
+.B info <path>...
+Show type, size, permissions (symbolic and octal), owner, link count, inode
+and timestamps. For directories the recursive size is included.
+.TP
+.B cp <src> <dst>
+Copy a regular file. If \fIdst\fR is a directory the file is copied into it.
+Asks before overwriting.
+.TP
+.B mv <src> <dst>
+Move a file or directory. Asks before overwriting. Moving a directory to a
+different filesystem is not supported.
+.TP
+.B rename <path> <name>
+Rename an entry within its directory. Never overwrites.
+.TP
+.B rm <file>...
+Remove files after confirmation. Directories are refused.
+.TP
+.B mkdir [\-p] <dir>...
+Create directories; \fB\-p\fR also creates missing parents.
+.TP
+.B rmdir <dir>...
+Remove empty directories after confirmation.
+.TP
+.B clear, help [command], quit
+Clear the screen, show the menu or help for one command, leave the program.
+.SH EXIT STATUS
+0 on a normal exit, 1 if the starting directory cannot be entered, 2 for
+invalid command line options.
+.SH FILES
+CFile does not read or write any configuration files.
+.SH LICENSE
+MIT.

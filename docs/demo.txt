@@ -1,0 +1,93 @@
+
+    ____ _____ _ _      
+   / ___|  ___(_) | ___ 
+  | |   | |_  | | |/ _ \
+  | |___|  _| | | |  __/
+   \____|_|   |_|_|\___|
+
+  Professional CLI file manager  v1.0.0
+
+  Navigation
+    ls [-a] [dir]          List contents with permissions and sizes
+    cd [dir|-]             Change directory ('-' = previous)
+    pwd                    Print the current directory
+    find <name> [dir]      Search files by name, recursively
+
+  Files
+    info <path>...         Show type, size, permissions and dates
+    cp <src> <dst>         Copy a file
+    mv <src> <dst>         Move a file or directory
+    rename <path> <name>   Rename a file or directory
+    rm <file>...           Remove files (asks for confirmation)
+
+  Directories
+    mkdir [-p] <dir>...    Create directories
+    rmdir <dir>...         Remove empty directories (asks first)
+
+  General
+    clear                  Clear the screen
+    help [command]         Show this menu or help for a command
+    quit                   Leave CFile
+
+  Paths accept ~ and quotes. Destructive commands always ask first.
+
+cfile ~ > cd projects
+cfile ~/projects > ls
+
+  Directory  /home/demo/projects
+
+  PERMISSIONS        SIZE  MODIFIED          NAME
+  drwxr-xr-x            -  2026-10-26 01:28  webapp/
+  -rw-r--r--     46.9 KiB  2026-10-26 01:28  archive.bin
+  -rwxr-x---         21 B  2026-10-26 01:28  build.sh
+  -rw-r--r--         63 B  2026-10-26 01:28  hello.c
+  lrwxrwxrwx            -  2026-10-26 01:28  notes-link -> ../Documents/notes.md
+
+  1 directory, 4 files, 47.0 KiB
+
+cfile ~/projects > info hello.c
+
+  hello.c
+
+  Path         /home/demo/projects/hello.c
+  Type         regular file
+  Size         63 B (63 bytes)
+  Permissions  -rw-r--r-- (0644)
+  Owner        demo:demo
+  Links        1
+  Inode        573520
+  Modified     2026-10-26 01:28
+  Accessed     2026-10-26 01:28
+
+cfile ~/projects > find notes ~
+
+  -  /home/demo/Documents/notes.md
+  l  /home/demo/projects/notes-link
+
+  2 matches
+
+cfile ~/projects > cp hello.c hello_backup.c
+  [ OK ] Copied 'hello.c' -> 'hello_backup.c'
+cfile ~/projects > cp hello.c hello_backup.c
+  [ ?? ] 'hello_backup.c' already exists. Overwrite? [y/N] n
+  [INFO] Cancelled. Nothing was changed.
+cfile ~/projects > rename hello_backup.c backup.c
+  [ OK ] Renamed 'hello_backup.c' to 'backup.c'
+cfile ~/projects > mkdir -p webapp/assets
+  [ OK ] Created directory 'webapp/assets'
+cfile ~/projects > rm backup.c
+
+    - backup.c (63 B)
+
+  [ ?? ] Permanently remove 1 item? [y/N] y
+  [ OK ] Removed 'backup.c'
+cfile ~/projects > rmdir webapp
+
+    - webapp (directory)
+
+  [ ?? ] Permanently remove 1 item? [y/N] y
+  [FAIL] rmdir: 'webapp': Directory not empty
+cfile ~/projects > rm nothing.txt
+  [FAIL] rm: 'nothing.txt': No such file or directory
+cfile ~/projects > quit
+  Goodbye.
