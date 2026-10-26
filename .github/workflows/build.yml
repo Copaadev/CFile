@@ -1,0 +1,32 @@
+name: build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  ubuntu:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        compiler: [gcc, clang]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build
+        run: make CC=${{ matrix.compiler }}
+      - name: Test
+        run: make CC=${{ matrix.compiler }} test
+      - name: Test with sanitizers
+        if: matrix.compiler == 'gcc'
+        run: make CC=${{ matrix.compiler }} sanitize
+
+  archlinux:
+    runs-on: ubuntu-latest
+    container: archlinux:latest
+    steps:
+      - name: Install toolchain
+        run: pacman -Syu --noconfirm base-devel git
+      - uses: actions/checkout@v4
+      - name: Build and test
+        run: make && make test
